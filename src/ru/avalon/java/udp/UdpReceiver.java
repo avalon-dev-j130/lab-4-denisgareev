@@ -1,8 +1,12 @@
 package ru.avalon.java.udp;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Упражнение, на правленное на выработку умений, связанных с полученеим
@@ -35,10 +39,14 @@ public final class UdpReceiver {
      * @return двоичный массив.
      */
     private static byte[] prepareBuffer() {
+        
+        final int MAX_MESSAGE_SIZE = 1024;
+        byte[] buffer = new byte[MAX_MESSAGE_SIZE];
+        return buffer;
         /*
          * TODO Реализовать метод prepareBuffer класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     /**
@@ -51,10 +59,13 @@ public final class UdpReceiver {
      * @return экземпляр типа {@link DatagramPacket}.
      */
     private static DatagramPacket preparePacket(byte[] buffer) {
+        
+        DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+        return packet;
         /*
          * TODO Реализовать метод preparePacket класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     /**
@@ -64,11 +75,14 @@ public final class UdpReceiver {
      *
      * @return сокет.
      */
-    private static DatagramSocket prepareSocket(int port) {
+    private static DatagramSocket prepareSocket(int port) throws SocketException {
+        
+        DatagramSocket socket = new DatagramSocket(9999);
+        return socket;
         /*
          * TODO Реализовать метод prepareSocket класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     /**
@@ -80,10 +94,19 @@ public final class UdpReceiver {
      * @return строковое сообщение.
      */
     private static String getMessage(DatagramPacket packet) {
+        
+        String message = "";
+        try {
+            message = new String(packet.getData(), "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(UdpReceiver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(message);
+        return message;
         /*
          * TODO Реализовать метод getMessage класса UdpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
 }
